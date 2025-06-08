@@ -1,8 +1,7 @@
-import { PrismaClient } from "@/generated/prisma";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/configs/prisma";
 
 async function main() {
   try {
