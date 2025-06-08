@@ -1,12 +1,12 @@
 # 🛍️ Mini Store API Contract
 
-**Base URL:** `https://your-api-url.com/api/products`
+**Base URL:** `https://your-api-url.com/api/v1`
 
 ---
 
 ## 🔹 Create Product
 
-**Endpoint:** `POST /api/products`
+**Endpoint:** `POST /products`
 
 **Request Body:**
 
@@ -55,7 +55,7 @@
 
 ## 🔹 Get All Products
 
-**Endpoint:** `GET /api/products`
+**Endpoint:** `GET /products`
 
 **Query Parameters (optional):**
 
@@ -68,7 +68,7 @@
 **Example:**
 
 ```
-GET /api/products?name=shoe&orderBy=price&orderDir=asc
+GET /products?name=shoe&orderBy=price&orderDir=asc
 ```
 
 **Responses:**
@@ -100,7 +100,7 @@ GET /api/products?name=shoe&orderBy=price&orderDir=asc
 
 ## 🔹 Get Single Product
 
-**Endpoint:** `GET /api/products/[id]`
+**Endpoint:** `GET /products/[id]`
 
 **Path Parameter:**
 
@@ -109,7 +109,7 @@ GET /api/products?name=shoe&orderBy=price&orderDir=asc
 **Example:**
 
 ```
-GET /api/products/1
+GET /products/1
 ```
 
 **Responses:**
@@ -148,7 +148,7 @@ GET /api/products/1
 
 ## 🔹 Update Product
 
-**Endpoint:** `PUT /api/products/[id]`
+**Endpoint:** `PUT /products/[id]`
 
 **Path Parameter:**
 
@@ -165,8 +165,6 @@ GET /api/products/1
   "image": "https://example.com/updated-image.png"
 }
 ```
-
-> You can send any subset of the fields above.
 
 **Responses:**
 
@@ -196,7 +194,7 @@ GET /api/products/1
 
 ## 🔹 Delete Product
 
-**Endpoint:** `DELETE /api/products/[id]`
+**Endpoint:** `DELETE /products/[id]`
 
 **Path Parameter:**
 
@@ -205,7 +203,7 @@ GET /api/products/1
 **Example:**
 
 ```
-DELETE /api/products/1
+DELETE /products/1
 ```
 
 **Responses:**
