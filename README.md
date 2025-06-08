@@ -1,36 +1,233 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛍️ Mini Store API Contract
 
-## Getting Started
+**Base URL:** `https://your-api-url.com/api/products`
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🔹 Create Product
+
+**Endpoint:** `POST /api/products`
+
+**Request Body:**
+
+```json
+{
+  "name": "Product Name",
+  "description": "Product Description",
+  "price": 100,
+  "stock": 10,
+  "image": "https://example.com/image.png"
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Responses:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- ✅ `201 Created`: Product created successfully
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+  ```json
+  {
+    "id": 1,
+    "name": "Product Name",
+    "description": "Product Description",
+    "price": 100,
+    "stock": 10,
+    "image": "https://example.com/image.png",
+    "createdAt": "2025-06-08T00:00:00.000Z"
+  }
+  ```
 
-## Learn More
+- ❌ `400 Bad Request`: Missing required fields
 
-To learn more about Next.js, take a look at the following resources:
+  ```json
+  {
+    "error": "Missing fields"
+  }
+  ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- ❌ `500 Internal Server Error`: Failed to create product
+  ```json
+  {
+    "error": "Failed to create product"
+  }
+  ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🔹 Get All Products
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Endpoint:** `GET /api/products`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Query Parameters (optional):**
+
+| Param      | Type   | Description                       |
+| ---------- | ------ | --------------------------------- |
+| `name`     | string | Filter by product name (contains) |
+| `orderBy`  | string | Sort by `price` or `createdAt`    |
+| `orderDir` | string | Sort direction: `asc` or `desc`   |
+
+**Example:**
+
+```
+GET /api/products?name=shoe&orderBy=price&orderDir=asc
+```
+
+**Responses:**
+
+- ✅ `200 OK`: Returns list of products
+
+  ```json
+  [
+    {
+      "id": 1,
+      "name": "Running Shoe",
+      "description": "Lightweight running shoe",
+      "price": 120,
+      "stock": 5,
+      "image": "https://example.com/shoe.png",
+      "createdAt": "2025-06-08T00:00:00.000Z"
+    }
+  ]
+  ```
+
+- ❌ `500 Internal Server Error`: Failed to get products
+  ```json
+  {
+    "error": "Failed to get products"
+  }
+  ```
+
+---
+
+## 🔹 Get Single Product
+
+**Endpoint:** `GET /api/products/[id]`
+
+**Path Parameter:**
+
+- `id` (integer): Product ID
+
+**Example:**
+
+```
+GET /api/products/1
+```
+
+**Responses:**
+
+- ✅ `200 OK`: Returns product details
+
+  ```json
+  {
+    "id": 1,
+    "name": "Product Name",
+    "description": "Product Description",
+    "price": 100,
+    "stock": 10,
+    "image": "https://example.com/image.png",
+    "createdAt": "2025-06-08T00:00:00.000Z"
+  }
+  ```
+
+- ❌ `404 Not Found`: Product does not exist
+
+  ```json
+  {
+    "error": "Product not found"
+  }
+  ```
+
+- ❌ `500 Internal Server Error`: Failed to get product
+
+  ```json
+  {
+    "error": "Failed to get product"
+  }
+  ```
+
+---
+
+## 🔹 Update Product
+
+**Endpoint:** `PUT /api/products/[id]`
+
+**Path Parameter:**
+
+- `id` (integer): Product ID
+
+**Request Body:**
+
+```json
+{
+  "name": "Updated Name",
+  "description": "Updated description",
+  "price": 150,
+  "stock": 20,
+  "image": "https://example.com/updated-image.png"
+}
+```
+
+> You can send any subset of the fields above.
+
+**Responses:**
+
+- ✅ `200 OK`: Product updated successfully
+
+  ```json
+  {
+    "id": 1,
+    "name": "Updated Name",
+    "description": "Updated description",
+    "price": 150,
+    "stock": 20,
+    "image": "https://example.com/updated-image.png",
+    "createdAt": "2025-06-08T00:00:00.000Z"
+  }
+  ```
+
+- ❌ `500 Internal Server Error`: Failed to update product
+
+  ```json
+  {
+    "error": "Failed to update product"
+  }
+  ```
+
+---
+
+## 🔹 Delete Product
+
+**Endpoint:** `DELETE /api/products/[id]`
+
+**Path Parameter:**
+
+- `id` (integer): Product ID
+
+**Example:**
+
+```
+DELETE /api/products/1
+```
+
+**Responses:**
+
+- ✅ `200 OK`: Product deleted successfully
+
+  ```json
+  {
+    "id": 1,
+    "name": "Deleted Product",
+    "description": "Description",
+    "price": 100,
+    "stock": 10,
+    "image": "https://example.com/image.png",
+    "createdAt": "2025-06-08T00:00:00.000Z"
+  }
+  ```
+
+- ❌ `500 Internal Server Error`: Product not found
+
+  ```json
+  {
+    "error": "Failed to delete product"
+  }
+  ```
