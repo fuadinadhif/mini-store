@@ -51,11 +51,11 @@ export async function PUT(
 
 export async function DELETE(
   _: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const deleted = await prisma.product.delete({
-      where: { id: parseInt(params.id) },
+      where: { id: parseInt((await params).id) },
     });
 
     return NextResponse.json(deleted);
